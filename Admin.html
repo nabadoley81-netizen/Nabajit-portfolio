@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; background: #f4f4f9; color: #333; }
+    .container { max-width: 600px; margin: 0 auto; background: #fff; padding: 25px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+    h2 { margin-top: 0; }
+    input, textarea, button { width: 100%; padding: 10px; margin: 8px 0; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; }
+    button { background: #0070f3; color: white; border: none; font-weight: bold; cursor: pointer; }
+    button:hover { background: #0051a8; }
+    .hidden { display: none; }
+    .logout-btn { background: #dc3545; }
+    .logout-btn:hover { background: #a71d2a; }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <!-- LOGIN FORM -->
+  <div id="login-section">
+    <h2>Admin Login</h2>
+    <input type="email" id="login-email" placeholder="Email Address">
+    <input type="password" id="login-password" placeholder="Password">
+    <button onclick="handleLogin()">Login</>
+    <p id="login-msg" style="color: red;"></p>
+  </div>
+
+  <!-- ADMIN DASHBOARD -->
+  <div id="dashboard-section" class="hidden">
+    <h2>Add New Project</h2>
+    <input type="text" id="title" placeholder="Project Title">
+    <textarea id="description" placeholder="Project Description"></textarea>
+    <input type="text" id="image-url" placeholder="Image URL (http://...)">
+    <input type="text" id="category" placeholder="Category (e.g. Web Design, Graphic)">
+    <input type="text" id="project-url" placeholder="Live Demo Link (Optional)">
+    <button onclick="addProject()">Add Project to Portfolio</button>
+
+    <br><br>
+    <button class="logout-btn" onclick="handleLogout()">Logout</button>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+  const SUPABASE_URL = 'https://pawjocmgkduixthttiyf.supabase.co';
+  const SUPABASE_ANON_KEY = 'sb_publishable_VDrrsXorS0n0j-4AqQEZkg_Dq3Zr2jn';
+  const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+  async function checkUser() {
+    const { data: { user } } = await supabaseClient.auth.getUser();
+    if (user) {
+      document.getElementById('login-section').classList.add('hidden');
+      document.getElementById('dashboard-section').classList.remove('hidden');
+    }
+  }
+  checkUser();
+
+  async function handleLogin() {
+    const email = document.getElementById('login-email').value;
+    const password = document.getElementById('login-password').value;
+    const msg = document.getElementById('login-msg');
+
+    const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
+
+    if (error) {
+      msg.innerText = error.message;
+    } else {
+      location.reload();
+    }
+  }
+
+  async function handleLogout() {
+    await supabaseClient.auth.signOut();
+    location.reload();
+  }
+
+  async function addProject() {
+    const title = document.getElementById('title').value;
+    const description = document.getElementById('description').value;
+    const image_url = document.getElementById('image-url').value;
+    const category = document.getElementById('category').value;
+    const project_url = document.getElementById('project-url').value;
+
+    if (!title) {
+      alert('Please enter a project title');
+      return;
+    }
+
+    const { data, error } = await supabaseClient.from('project').insert([
+      { title, description, image_url, category, project_url }
+    ]);
+
+    if (error) {
+      alert('Error: ' + error.message);
+    } else {
+      alert('Project added successfully!');
+      document.getElementById('title').value = '';
+      document.getElementById('description').value = '';
+      document.getElementById('image-url').value = '';
+      document.getElementById('category').value = '';
+      document.getElementById('project-url').value = '';
+    }
+  }
+</script>
+
+</body>
+</html>
