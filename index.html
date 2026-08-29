@@ -3,102 +3,255 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nabajit Doley — Web Designer</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Nabajit Doley — Website Designer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-light: #f4f3ef;
+            --bg-dark: #121212;
+            --card-dark: #1e1e1e;
+            --accent-blue: #3b66ff;
+            --text-dark: #111111;
+            --text-muted: #666666;
+            --text-light: #ffffff;
+            --border-color: rgba(0, 0, 0, 0.08);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
+        body { background-color: var(--bg-light); color: var(--text-dark); line-height: 1.5; overflow-x: hidden; }
+
+        /* Floating Pill Nav */
+        .nav-wrapper { position: fixed; top: 20px; left: 0; right: 0; z-index: 1000; display: flex; justify-content: center; padding: 0 20px; }
+        .nav { background: #ffffff; border-radius: 40px; padding: 10px 24px; display: flex; justify-content: space-between; align-items: center; width: 100%; max-width: 900px; box-shadow: 0 10px 30px rgba(0,0,0,0.06); border: 1px solid var(--border-color); }
+        .nav-logo { font-size: 20px; font-weight: 800; tracking: -0.5px; }
+        .nav-logo span { color: var(--accent-blue); }
+        .menu-btn { background: #111; color: white; border: none; width: 42px; height: 42px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+
+        /* Common Layout */
+        section { padding: 90px 24px; max-width: 1000px; margin: 0 auto; }
+        .section-tag { color: var(--accent-blue); font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 12px; display: block; }
+        h1, h2 { font-weight: 800; letter-spacing: -1.5px; line-height: 1.1; }
+
+        /* Hero */
+        .hero { padding-top: 150px; padding-bottom: 70px; }
+        .hero h1 { font-size: clamp(42px, 7vw, 68px); margin-bottom: 20px; }
+        .hero h1 span { color: var(--accent-blue); }
+        .hero-sub { font-size: 18px; color: var(--text-muted); max-width: 540px; margin-bottom: 32px; font-weight: 500; }
+        .btn-group { display: flex; gap: 14px; flex-wrap: wrap; }
+        .btn { padding: 14px 28px; border-radius: 30px; font-weight: 700; font-size: 15px; text-decoration: none; transition: 0.2s; display: inline-flex; align-items: center; gap: 8px; }
+        .btn-dark { background: #111; color: white; }
+        .btn-blue { background: var(--accent-blue); color: white; }
+
+        /* Ticker Bar */
+        .ticker { background: #111; color: #888; padding: 18px 24px; font-size: 13px; font-weight: 600; display: flex; gap: 30px; overflow-x: auto; white-space: nowrap; border-top: 1px solid #222; }
+        .ticker span { display: flex; align-items: center; gap: 10px; }
+
+        /* Projects Section */
+        .projects-grid { display: flex; flex-direction: column; gap: 30px; margin-top: 40px; }
+        .project-card { background: #e5e3db; border-radius: 24px; padding: 24px; display: flex; flex-direction: column; gap: 20px; text-decoration: none; color: inherit; }
+        .project-preview { background: #111; color: white; border-radius: 16px; padding: 40px 24px; min-height: 240px; display: flex; flex-direction: column; justify-content: flex-end; position: relative; overflow: hidden; }
+        .project-preview img { position: absolute; top:0; left:0; width:100%; height:100%; object-fit: cover; opacity: 0.8; }
+        .project-preview-content { position: relative; z-index: 2; }
+        .project-category { font-size: 12px; font-weight: 700; letter-spacing: 1px; opacity: 0.8; text-transform: uppercase; margin-bottom: 6px; }
+        .project-preview h3 { font-size: 32px; font-weight: 800; line-height: 1.1; }
+        .project-meta { display: flex; justify-content: space-between; align-items: center; font-weight: 700; font-size: 15px; }
+
+        /* Dark Services Section */
+        .dark-wrapper { background: var(--bg-dark); color: white; margin-top: 40px; }
+        .dark-wrapper section { padding: 90px 24px; }
+        .dark-wrapper h2 { font-size: clamp(36px, 6vw, 54px); }
+        .services-list { display: flex; flex-direction: column; gap: 20px; margin-top: 40px; }
+        .service-card { background: var(--card-dark); border-radius: 16px; padding: 30px; border: 1px solid rgba(255,255,255,0.05); }
+        .service-num { font-size: 13px; color: var(--text-muted); font-weight: 700; margin-bottom: 12px; }
+        .service-card h3 { font-size: 24px; font-weight: 700; margin-bottom: 10px; }
+        .service-card p { color: #aaa; font-size: 15px; }
+
+        /* Blue Philosophy Banner */
+        .blue-banner { background: var(--accent-blue); color: white; text-align: left; padding: 80px 24px; }
+        .blue-banner .section-tag { color: rgba(255,255,255,0.7); }
+        .blue-banner h2 { font-size: clamp(36px, 6vw, 54px); max-width: 700px; margin-bottom: 20px; }
+        .blue-banner p { font-size: 18px; opacity: 0.9; max-width: 600px; }
+
+        /* Process Section */
+        .process-cards { display: flex; flex-direction: column; gap: 16px; margin-top: 40px; }
+        .process-card { background: #e8e6df; border-radius: 20px; padding: 30px; }
+        .process-num { color: var(--accent-blue); font-weight: 800; font-size: 18px; margin-bottom: 10px; }
+
+        /* FAQ Section */
+        .faq-list { margin-top: 40px; display: flex; flex-direction: column; gap: 12px; }
+        details { background: transparent; border-bottom: 1px solid #ddd; padding: 20px 0; cursor: pointer; }
+        summary { font-size: 18px; font-weight: 700; list-style: none; display: flex; justify-content: space-between; align-items: center; }
+        summary::after { content: '►'; font-size: 12px; }
+        details[open] summary::after { content: '▼'; }
+        details p { margin-top: 12px; color: var(--text-muted); font-size: 15px; }
+
+        /* Dark Footer CTA */
+        .footer-cta { background: #0a0a0a; color: white; text-align: center; padding: 100px 24px; }
+        .footer-cta h2 { font-size: clamp(40px, 7vw, 64px); margin-bottom: 16px; }
+        .footer-cta h2 span { color: var(--accent-blue); display: block; }
+        .footer-cta p { color: #888; margin-bottom: 30px; font-size: 17px; }
+        .footer-bottom { background: #050505; color: #555; padding: 30px 24px; font-size: 13px; text-align: center; border-top: 1px solid #151515; }
+    </style>
 </head>
 <body>
 
-    <!-- NAV -->
-    <nav class="nav">
-        <div class="nav-logo">NABAJIT DOLEY</div>
-        <div class="nav-links">
-            <a href="#work">Work</a>
-            <a href="#about">About</a>
-            <a href="#contact">Contact</a>
-        </div>
-    </nav>
+    <!-- Floating Nav Bar -->
+    <div class="nav-wrapper">
+        <nav class="nav">
+            <div class="nav-logo">Nabajit<span>.</span></div>
+            <button class="menu-btn">☰</button>
+        </nav>
+    </div>
 
-    <!-- HERO -->
+    <!-- Hero Section -->
     <section class="hero">
-        <div class="hero-tag">AVAILABLE FOR FREELANCE</div>
-        <h1 class="hero-title" id="dyn-hero_title">Websites that make businesses stand out.</h1>
-        <p class="hero-subtitle" id="dyn-hero_subtitle">
-            I'm Nabajit Doley, a website designer creating modern, responsive and business-focused digital experiences.
-        </p>
-        <div class="hero-actions">
-            <a href="#work" class="btn btn-primary">See My Work</a>
-            <a href="#" id="dyn-whatsapp_link" target="_blank" class="btn btn-secondary">Chat on WhatsApp</a>
+        <h1 id="dyn-hero_title">Websites that make <span>businesses stand out.</span></h1>
+        <p class="hero-sub" id="dyn-hero_subtitle">I'm Nabajit Doley, a website designer creating modern, responsive and business-focused digital experiences.</p>
+        <div class="btn-group">
+            <a href="#work" class="btn btn-dark">View My Work ↗</a>
+            <a href="#" id="dyn-whatsapp_link" target="_blank" class="btn btn-blue">WhatsApp Me</a>
         </div>
     </section>
 
-    <!-- PHILOSOPHY -->
-    <section class="philosophy">
-        <div class="philosophy-content">
-            <span class="section-label">MY APPROACH</span>
-            <h2 id="dyn-philosophy_title">A website isn't just a digital visiting card.</h2>
-            <p id="dyn-philosophy_desc">
-                It should explain what you do, build trust and make it easy for customers to take action.
-            </p>
-        </div>
-    </section>
+    <!-- Ticker Bar -->
+    <div class="ticker">
+        <span>● Digital experiences built with purpose.</span>
+        <span>● Web Design</span>
+        <span>● UX / UI</span>
+        <span>● Development</span>
+        <span>● Business Websites</span>
+    </div>
 
-    <!-- WORK / PROJECTS -->
-    <section class="work" id="work">
-        <div class="section-header">
-            <span class="section-label">SELECTED WORK</span>
-            <h2>Recent Projects</h2>
-        </div>
+    <!-- Selected Work Section -->
+    <section id="work">
+        <span class="section-tag">SELECTED WORK</span>
+        <h2 style="font-size: clamp(36px, 6vw, 54px);">Projects with purpose.</h2>
         <div class="projects-grid" id="dynamic-projects-grid">
-            <!-- Dynamic Projects Will Load Here -->
+            <!-- Dynamic Projects from Supabase -->
         </div>
     </section>
 
-    <!-- ABOUT -->
-    <section class="about" id="about">
-        <div class="about-grid">
-            <div class="about-text">
-                <span class="section-label">ABOUT ME</span>
-                <h2 id="dyn-about_title">Design with purpose.</h2>
-                <p id="dyn-about_bio">
-                    Hi, I'm Nabajit Doley, a website designer focused on creating modern digital experiences for businesses and professionals.
-                </p>
+    <!-- Dark Services Section -->
+    <div class="dark-wrapper">
+        <section>
+            <span class="section-tag">WHAT I DO</span>
+            <h2>From idea to<br>online presence.</h2>
+            <div class="services-list">
+                <div class="service-card">
+                    <div class="service-num">01 / STRATEGY</div>
+                    <h3>Website Strategy</h3>
+                    <p>Understand your business, audience and goals before designing.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-num">02 / DESIGN</div>
+                    <h3>UX / UI Design</h3>
+                    <p>Clean layouts, strong typography and simple navigation.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-num">03 / WEBSITE</div>
+                    <h3>Business Websites</h3>
+                    <p>Professional websites for businesses, restaurants and professionals.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-num">04 / FEATURES</div>
+                    <h3>Business Features</h3>
+                    <p>WhatsApp, Call, Maps, menus, forms and useful integrations.</p>
+                </div>
             </div>
-            <div class="about-stats">
-                <div class="stat-card">
-                    <span class="stat-num">100%</span>
-                    <span class="stat-label">Custom Design</span>
-                </div>
-                <div class="stat-card">
-                    <span class="stat-num">Mobile</span>
-                    <span class="stat-label">Responsive First</span>
-                </div>
+        </section>
+    </div>
+
+    <!-- Blue Philosophy Banner -->
+    <div class="blue-banner">
+        <div style="max-width: 1000px; margin: 0 auto;">
+            <span class="section-tag">MY PHILOSOPHY</span>
+            <h2 id="dyn-philosophy_title">A website isn't just a digital visiting card.</h2>
+            <p id="dyn-philosophy_desc">It should explain what you do, build trust and make it easy for customers to take action.</p>
+        </div>
+    </div>
+
+    <!-- Process Section -->
+    <section>
+        <span class="section-tag">PROCESS</span>
+        <h2 style="font-size: clamp(36px, 6vw, 54px);">Simple. Clear.<br>Professional.</h2>
+        <div class="process-cards">
+            <div class="process-card">
+                <div class="process-num">01</div>
+                <h3>Discover</h3>
+                <p>Understand your business and requirements.</p>
+            </div>
+            <div class="process-card">
+                <div class="process-num">02</div>
+                <h3>Plan</h3>
+                <p>Create structure, content direction and user journey.</p>
+            </div>
+            <div class="process-card">
+                <div class="process-num">03</div>
+                <h3>Design & Build</h3>
+                <p>Develop responsive, clean and modern layout.</p>
             </div>
         </div>
     </section>
 
-    <!-- FOOTER / CONTACT -->
-    <footer class="footer" id="contact">
-        <div class="footer-content">
-            <h2>Let's build something together.</h2>
-            <p>Have a project in mind? Reach out and let's discuss.</p>
-            <div class="footer-buttons">
-                <a href="#" id="dyn-call_link" class="btn btn-primary">Call Me</a>
-                <a href="#" id="dyn-whatsapp_link2" target="_blank" class="btn btn-secondary">WhatsApp</a>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; Nabajit Doley. All rights reserved.</p>
-        </div>
-    </footer>
+    <!-- About Section -->
+    <section id="about" style="border-top: 1px solid var(--border-color);">
+        <span class="section-tag">ABOUT NABAJIT</span>
+        <h2 id="dyn-about_title" style="font-size: clamp(36px, 6vw, 54px); margin-bottom: 20px;">Design with purpose.</h2>
+        <p id="dyn-about_bio" style="font-size: 18px; color: var(--text-muted); max-width: 700px; line-height: 1.6;">
+            Hi, I'm Nabajit Doley, a website designer focused on creating modern digital experiences for businesses and professionals.
+        </p>
+    </section>
 
-    <!-- Supabase Integration Code -->
+    <!-- FAQ Section -->
+    <section style="border-top: 1px solid var(--border-color);">
+        <span class="section-tag">FAQ</span>
+        <h2 style="font-size: clamp(36px, 6vw, 54px);">Questions,<br>answered.</h2>
+        <div class="faq-list">
+            <details>
+                <summary>What websites do you design?</summary>
+                <p>Business websites, landing pages, portfolio sites, and custom agency sites.</p>
+            </details>
+            <details>
+                <summary>Will my website work on mobile?</summary>
+                <p>Yes, all designs are 100% mobile-responsive and ultra fast.</p>
+            </details>
+            <details>
+                <summary>Can I own my domain and hosting?</summary>
+                <p>Yes, total ownership stays with you.</p>
+            </details>
+            <details>
+                <summary>Can you add WhatsApp and Call buttons?</summary>
+                <p>Yes, direct quick action buttons are built-in.</p>
+            </details>
+        </div>
+    </section>
+
+    <!-- Footer CTA Section -->
+    <div class="footer-cta" id="contact">
+        <span class="section-tag">START A PROJECT</span>
+        <h2>Let's build<br><span>something.</span></h2>
+        <p>Have a website idea or business project? Let's talk about what you need.</p>
+        <div class="btn-group" style="justify-content: center;">
+            <a href="#" id="dyn-whatsapp_link2" target="_blank" class="btn btn-blue">WhatsApp Me ↗</a>
+            <a href="#" id="dyn-call_link" class="btn" style="background: #222; color: white;">Call Now</a>
+        </div>
+    </div>
+
+    <!-- Footer Copyright -->
+    <div class="footer-bottom">
+        <strong>Nabajit.</strong> Professional Website Designer<br><br>
+        © 2026 Nabajit Doley
+    </div>
+
+    <!-- Supabase JavaScript Integration -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
       const SUPABASE_URL = 'https://pawjocmgkduixthttiyf.supabase.co';
       const SUPABASE_ANON_KEY = 'sb_publishable_VDrrsXorS0n0j-4AqQEZkg_Dq3Zr2jn';
       const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-      // Load Dynamic Text Content
       async function fetchSiteSettings() {
         const { data, error } = await supabaseClient.from('site_settings').select('*');
         if (!error && data) {
@@ -106,7 +259,6 @@
             const el = document.getElementById(`dyn-${item.key}`);
             if (el) el.innerText = item.value;
 
-            // Update WhatsApp Links
             if (item.key === 'whatsapp_number' && item.value) {
               const waUrl = `https://wa.me/${item.value.replace(/\+/g, '')}`;
               const wa1 = document.getElementById('dyn-whatsapp_link');
@@ -115,7 +267,6 @@
               if (wa2) wa2.href = waUrl;
             }
 
-            // Update Phone Call Link
             if (item.key === 'phone_number' && item.value) {
               const callEl = document.getElementById('dyn-call_link');
               if (callEl) callEl.href = `tel:${item.value}`;
@@ -124,13 +275,12 @@
         }
       }
 
-      // Load Dynamic Projects
       async function fetchProjects() {
         const grid = document.getElementById('dynamic-projects-grid');
         const { data: projects, error } = await supabaseClient.from('project').select('*');
 
         if (error || !projects || projects.length === 0) {
-          grid.innerHTML = '<p style="grid-column: 1/-1; text-align: center;">No projects added yet.</p>';
+          grid.innerHTML = '<p style="text-align:center;">No projects found.</p>';
           return;
         }
 
@@ -139,14 +289,16 @@
           const card = document.createElement('div');
           card.className = 'project-card';
           card.innerHTML = `
-            <div class="project-img">
-                <img src="${p.image_url || 'https://via.placeholder.com/600x400'}" alt="${p.title}">
+            <div class="project-preview">
+                ${p.image_url ? `<img src="${p.image_url}" alt="${p.title}">` : ''}
+                <div class="project-preview-content">
+                    <div class="project-category">${p.category || 'CONCEPT PROJECT'}</div>
+                    <h3>${p.title}</h3>
+                </div>
             </div>
-            <div class="project-info">
-                <span class="project-tag">${p.category || 'Web Design'}</span>
-                <h3>${p.title}</h3>
-                <p>${p.description || ''}</p>
-                ${p.project_url ? `<a href="${p.project_url}" target="_blank" class="project-link">View Live Site &rarr;</a>` : ''}
+            <div class="project-meta">
+                <span>${p.title}</span>
+                <span style="opacity:0.6; font-size:13px;">${p.category || 'Web Design'}</span>
             </div>
           `;
           grid.appendChild(card);
